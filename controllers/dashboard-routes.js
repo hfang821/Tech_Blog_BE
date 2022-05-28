@@ -1,4 +1,4 @@
-const router = require("exress").Router();
+const router = require("express").Router();
 const withAuth = require("../utils/auth");
 const { Post, User, Comment } = require("../models");
 
@@ -9,7 +9,6 @@ router.get("/", withAuth, async (req, res) => {
 
   try {
     const postStuff = await Post.findAll({
-      where: { userId: req.session.userId },
       include: [
         {
           model: Comment,
