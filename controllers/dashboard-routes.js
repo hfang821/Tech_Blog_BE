@@ -17,7 +17,7 @@ router.get("/", withAuth, async (req, res) => {
             "comment_text",
             "post_id",
             "user_id",
-            "created_at",
+            "createdAt",
           ],
           include: 
             {
@@ -52,7 +52,7 @@ router.get("/edit/:id", withAuth, async (req, res) => {
             "comment_text",
             "post_id",
             "user_id",
-            "created_at",
+            "createdAt",
           ],
           include: [
             {
