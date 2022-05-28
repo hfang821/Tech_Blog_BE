@@ -1,0 +1,12 @@
+1. Write out DB MOdels
+2. Relations of DB models (Associations)
+3. Work on USER routes (login/logout) on backend
+4. Work on Post routes on backend
+5. Handle Comment routes on backend
+6. Once routes on backend are tested (insomnia) you can go to frontend JS files (public/javascript) and connect end points from backend 
+7. Get data from backend to display on page 
+8. Then get to styling\
+
+
+// way to reference the front end javascript file for your handlebars file
+<script src='/javascript/singlePost.js'></script>
