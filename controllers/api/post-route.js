@@ -6,12 +6,12 @@ const sequelize = require("../../config/connection");
 //get all posts
 router.get("/", (req, res) => {
   Post.findAll({
-    attributes: ["id", "title", "content", "user_id", "created_at"],
-    order: [["created_at", "DESC"]],
+    attributes: ["id", "title", "content", "user_id", "createdAt"],
+    order: [["createdAt", "DESC"]],
     include: [
       {
         model: Comment,
-        attributes: ["id", "comment_text", "user_id", "post_id", "created_at"],
+        attributes: ["id", "comment_text", "user_id", "post_id", "createdAt"],
         include: {
           model: User,
           attributes: ["username"],
@@ -35,11 +35,11 @@ router.get("/", (req, res) => {
 router.get("/:id", (req, res) => {
   Post.findOne({
     where: { id: req.params.id },
-    attributes: ["id", "title", "content", "user_id", "created_at"],
+    attributes: ["id", "title", "content", "user_id", "createdAt"],
     include: [
       {
         model: Comment,
-        attributes: ["id", "comment_text", "user_id", "post_id", "created_at"],
+        attributes: ["id", "comment_text", "user_id", "post_id", "createdAt"],
         include: {
           model: User,
           attributes: ["username"],
@@ -86,13 +86,13 @@ router.post("/", withAuth, (req, res) => {
 router.put("/:id", withAuth, (req, res) => {
   Post.update(
     {
-    title: req.body.title,
-    content: req.body.content,
-    }, 
+      title: req.body.title,
+      content: req.body.content,
+    },
     {
-      where: {id: req.params.id}
+      where: { id: req.params.id },
     }
-)
+  )
     .then((dbPostData) => {
       if (!dbPostData) {
         res.status(404).json({ message: "this post is not found" });

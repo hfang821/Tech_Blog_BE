@@ -5,29 +5,22 @@ router.get("/", async (req, res) => {
   // withAuth will send you back to the utils/auth and test if there is a req.session.userId
   // if there is NOT it will redirect you back to the login page
   // if there IS (next in utils/auth) it will move to the route handling below
-    console.log(req.session);
+  console.log(req.session);
   try {
     const postStuff = await Post.findAll({
       include: [
         {
           model: Comment,
-          attributes: [
-            "id",
-            "comment_text",
-            "post_id",
-            "user_id",
-            "created_at",
-          ],
-          include: 
-            {
-              model: User,
-              attributes: ["username"],
-            }
-        },
-        {
+          attributes: ["id", "comment_text", "post_id", "user_id", "createdAt"],
+          include: {
             model: User,
             attributes: ["username"],
-        }
+          },
+        },
+        {
+          model: User,
+          attributes: ["username"],
+        },
       ],
     });
 
@@ -39,49 +32,41 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.get("/login", (req, res)=>{
-    if(req.session.loggedIn) {
-        res.redirect("/");
-        return;
-    }
-    //ask Ta: should I change it to res.redirect?
-    res.render("login")
-})
+router.get("/login", (req, res) => {
+  if (req.session.loggedIn) {
+    res.redirect("/");
+    return;
+  }
+  //ask Ta: should I change it to res.redirect?
+  res.render("login");
+});
 
 router.get("/post/:id", async (req, res) => {
   try {
     const postSingle = await Post.findOne({
-      where: {id: req.params.id},
-      attributes: ['id', 'content', 'title', 'created_at'],
+      where: { id: req.params.id },
+      attributes: ["id", "content", "title", "createdAt"],
       include: [
         {
           model: Comment,
-          attributes: [
-            "id",
-            "comment_text",
-            "post_id",
-            "user_id",
-            "created_at",
-          ],
-          include: 
-            {
-              model: User,
-              attributes: ["username"]
-            }
-        },
-        {
+          attributes: ["id", "comment_text", "post_id", "user_id", "createdAt"],
+          include: {
             model: User,
             attributes: ["username"],
-        }
-      ]
+          },
+        },
+        {
+          model: User,
+          attributes: ["username"],
+        },
+      ],
     });
 
     const post = postSingle.get({ plain: true });
     if (!post) {
       res.status(404).end();
     }
-    res.render("single-post", {post, loggedIn: req.session.loggedIn});
-    
+    res.render("single-post", { post, loggedIn: req.session.loggedIn });
   } catch (err) {
     console.log(err);
     res.status(500).json(err);
