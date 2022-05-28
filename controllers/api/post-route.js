@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const { Post, User, Comment } = require("../../models");
-const withAuth = require('../../utils/auth');
+const withAuth = require("../../utils/auth");
 const sequelize = require("../../config/connection");
 
 //get all posts
@@ -68,6 +68,8 @@ router.get("/:id", (req, res) => {
 //post a new blog
 //need to change user_id to a session user_id later
 router.post("/", withAuth, (req, res) => {
+  console.log(req.body);
+  console.log(req.session);
   Post.create({
     title: req.body.title,
     content: req.body.content,
@@ -82,10 +84,15 @@ router.post("/", withAuth, (req, res) => {
 
 //update a post
 router.put("/:id", withAuth, (req, res) => {
-  Post.update({
+  Post.update(
+    {
     title: req.body.title,
     content: req.body.content,
-  })
+    }, 
+    {
+      where: {id: req.params.id}
+    }
+)
     .then((dbPostData) => {
       if (!dbPostData) {
         res.status(404).json({ message: "this post is not found" });
