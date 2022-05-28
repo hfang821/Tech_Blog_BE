@@ -10,3 +10,7 @@
 
 // way to reference the front end javascript file for your handlebars file
 <script src='/javascript/singlePost.js'></script>
+
+
+Heroku Deployment: 
+https://lit-badlands-69940.herokuapp.com/
