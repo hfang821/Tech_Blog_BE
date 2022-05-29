@@ -23,7 +23,7 @@ https://lit-badlands-69940.herokuapp.com/
 * Prettier
 
 ## Built-Logic:
-1. Write out DB MOdels
+1. Write out DB Models
 2. Relations of DB models (Associations)
 3. Work on USER routes (login/logout) on backend
 4. Work on Post routes on backend
